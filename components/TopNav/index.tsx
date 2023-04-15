@@ -1,14 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 import TopNavContainer from "./TopNavContainer";
 import TopNavBox from "./TopNavBox";
 import TopNavLeft from "./TopNavLeft";
 import TopNavRight from "./TopNavRight";
-import { useAppSelector } from "@/store";
 import { getChatIdFromPathname } from "@/utils/getChatIdFromPathname";
 import { useFiles } from "@/hooks/useFiles";
+import HomeIcon from "@/icons/HomeIcon";
 
 function TopNav() {
   const pathname = usePathname();
@@ -18,6 +17,9 @@ function TopNav() {
   return (
     <TopNavContainer>
       <TopNavLeft>
+        <TopNavBox href={`/chat/${chatId}`} active={false}>
+          <HomeIcon className="md:w-8 md:h-8 h-6 w-6 text-primary hover:text-primary/80" />
+        </TopNavBox>
         {files?.map((file: IFile) => {
           // href should be like /chat/[id]/files/[fileName]/modified
           const newHref = "/chat/" + chatId + "/files/" + file.name;

@@ -1,15 +1,15 @@
 "use client";
 
-import ChatCollapse from "./ChatCollapse";
-import Spinner from "../Spinner";
-import { useEffect, useState } from "react";
-import { getFiles } from "@/features";
 import { useClient } from "@/context/ClientProvider";
-import { collection, orderBy, query } from "firebase/firestore";
+import { getFiles } from "@/features";
 import { db } from "@/firebase";
-import { useCollection } from "react-firebase-hooks/firestore";
-import { setFilesAndChat } from "@/store/file/fileSlice";
 import { useAppDispatch, useAppSelector } from "@/store";
+import { setFilesAndChat } from "@/store/file/fileSlice";
+import { collection, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useCollection } from "react-firebase-hooks/firestore";
+import Spinner from "../Spinner";
+import ChatCollapse from "./ChatCollapse";
 
 function ChatHistory() {
   const user = useClient();

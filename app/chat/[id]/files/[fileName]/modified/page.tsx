@@ -6,6 +6,7 @@ import { useClient } from "@/context/ClientProvider";
 import insertMdElements from "@/utils/insertMdElements";
 import { usePathname } from "next/navigation";
 import Spinner from "@/components/Spinner";
+import PromptInput from "@/components/PromptInput";
 
 interface IGetModifiedFile {
   chatId: string;
@@ -64,9 +65,12 @@ function ModifiedFile() {
   });
 
   return (
-    <div className="flex-1 overflow-y-auto">
-      <Markdown markdown={{ content: modifiedTargetSection }} />
-    </div>
+    <>
+      <div className="flex-1 overflow-y-auto">
+        <Markdown markdown={{ content: modifiedTargetSection }} />
+      </div>
+      <PromptInput actionPrompt="fix" files={data.modified} isDisabled={true} />
+    </>
   );
 }
 

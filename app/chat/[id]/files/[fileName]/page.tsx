@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
 import Markdown from "@/components/Markdown";
-import SearchInput from "@/components/SearchInput";
+import PromptInput from "@/components/PromptInput";
 import { useFiles } from "@/hooks/useFiles";
 import { getChatIdFromPathname } from "@/utils/getChatIdFromPathname";
 import insertMdElements from "@/utils/insertMdElements";
@@ -33,7 +33,7 @@ function FileDetails() {
       <div className="flex-1 overflow-y-auto">
         <Markdown markdown={{ content: mdContent }} />
       </div>
-      <SearchInput files={[file!]} actionPrompt="fix" />
+      <PromptInput files={[file!]} actionPrompt="fix" isDisabled={true} />
     </>
   );
 }

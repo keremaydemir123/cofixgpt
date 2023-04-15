@@ -10,9 +10,10 @@ import { useClient } from "@/context/ClientProvider";
 type Props = {
   files: IFile[];
   actionPrompt: ActionPrompt;
+  isDisabled?: boolean;
 };
 
-function SearchInput({ files, actionPrompt }: Props) {
+function PromptInput({ files, actionPrompt, isDisabled = false }: Props) {
   // TODO Seperate async logic from component
 
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -70,13 +71,14 @@ function SearchInput({ files, actionPrompt }: Props) {
         rows={1}
         onInput={handleInputChange}
         ref={ref}
-        className="outline-none bg-transparent flex-1 rounded-lg px-4 text-base-content resize-none overflow-hidden h-6 text-md"
+        disabled={isDisabled}
+        className="disabled:textarea-disabled outline-none bg-transparent flex-1 rounded-lg px-4 text-base-content resize-none overflow-hidden h-6 text-md"
       />
-      <button className="">
+      <button className="disabled: text-gray-500" disabled={isDisabled}>
         <PaperPlane className="w-7 h-7 mr-4" />
       </button>
     </form>
   );
 }
 
-export default SearchInput;
+export default PromptInput;

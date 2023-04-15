@@ -198,7 +198,7 @@ const Markdown: FC<MarkdownProps> = ({ markdown }) => {
             <button
               onClick={() => handleCopyCode(codeChunk)}
               aria-label="Copy code to clipboard"
-              className="absolute btn-outline rounded-md btn-primary cursor-pointer p-2 right-5 top-3 w-max flex items-center gap-2 z-100"
+              className="absolute btn-primary rounded-md cursor-pointer p-2 right-5 top-3 w-max flex items-center gap-2 z-100"
             >
               Copy <ClipboardIcon className="w-4 h-4" />
             </button>
