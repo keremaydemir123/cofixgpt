@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import ToastNotifications from "@/components/ToastNotifications";
+import { Provider } from "react-redux";
+import store from "@/store";
 
 const ClientContext = createContext<User | null>({
   email: "",
@@ -33,7 +35,11 @@ export const ClientProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClientContext.Provider value={user}>
       <ToastNotifications />
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </Provider>
     </ClientContext.Provider>
   );
 };

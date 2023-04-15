@@ -2,44 +2,41 @@
 
 import ChatCollapse from "./ChatCollapse";
 import Spinner from "../Spinner";
-import TrashIcon from "@/icons/TrashIcon";
-import Files from "./Files";
 import { useEffect, useState } from "react";
-import { getChats, getFiles } from "@/features";
+import { getFiles } from "@/features";
 import { useClient } from "@/context/ClientProvider";
-import EditIcon from "@/icons/EditIcon";
+import { collection, orderBy, query } from "firebase/firestore";
+import { db } from "@/firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { setFilesAndChat } from "@/store/file/fileSlice";
+import { useAppDispatch, useAppSelector } from "@/store";
 
 function ChatHistory() {
   const user = useClient();
-  const [chats, setChats] = useState<{ id: string }[]>([]);
-  const [files, setFiles] = useState<IFilesAndChat[]>([]);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const filesAndChat = useAppSelector((state) => state.files);
+  const [loading, setLoading] = useState(true);
+
+  const [chats, error] = useCollection(
+    query(
+      collection(db, "users", user?.email!, "chats"),
+      orderBy("createdAt", "desc")
+    )
+  );
 
   useEffect(() => {
-    setLoading(true);
-    getChats({ email: user?.email! })
-      .then((data) => {
-        setChats(data.chats);
-        if (data.chats.length === 0) setLoading(false);
-
-        data.chats.map((chat: { id: string }) => {
-          getFiles({ email: user?.email!, chatId: chat.id })
-            .then((data: { files: IFile[] }) => {
-              setFiles((prev) => [
-                ...prev,
-                { chatId: chat.id, files: data.files },
-              ]);
-              setLoading(false);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [user?.email]);
+    if (!chats) return;
+    chats?.docs.map((chat: { id: string }) => {
+      getFiles({ email: user?.email!, chatId: chat.id })
+        .then((data: { files: IFile[] }) => {
+          dispatch(setFilesAndChat({ chatId: chat.id, files: data.files }));
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setLoading(false));
+    });
+  }, [chats]);
 
   if (loading) return <Spinner />;
 
@@ -53,14 +50,14 @@ function ChatHistory() {
 
   return (
     <div className="flex flex-1 flex-col gap-2 h-full">
-      {chats?.map((chat) => {
-        const chatFiles = files.find((file) => file.chatId === chat.id)?.files;
-        if (!chatFiles) return null;
+      {chats?.docs.map((chat) => {
+        const files = filesAndChat.find((obj) => obj.chatId === chat.id)?.files;
+        if (!files) return null;
         return (
           <ChatCollapse
             key={chat.id}
             chatId={chat.id}
-            files={chatFiles}
+            files={files}
             removeChat={removeChat}
             editChatTitle={editChatTitle}
           />

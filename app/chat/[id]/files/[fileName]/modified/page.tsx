@@ -9,17 +9,16 @@ import Spinner from "@/components/Spinner";
 
 interface IGetModifiedFile {
   chatId: string;
-  fileName: string;
   email: string;
 }
 
-async function getModifiedFile({ chatId, fileName, email }: IGetModifiedFile) {
+async function getModifiedFile({ chatId, email }: IGetModifiedFile) {
   return fetch("/api/getModifiedFile", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ chatId, fileName, email }),
+    body: JSON.stringify({ chatId, email }),
   }).then((res) => res.json());
 }
 
@@ -40,14 +39,19 @@ function ModifiedFile() {
     queryFn: () =>
       getModifiedFile({
         chatId: chatId!,
-        fileName: fileName!,
         email: user?.email!,
       }),
     enabled: !!chatId && !!fileName && !!user?.email,
+    retry: 0,
   });
 
   if (isLoading) return <Spinner />;
-  if (error) return <div>error</div>;
+  if (error)
+    return (
+      <div className="text-center font-bold text-error text-xl">
+        There is no modified files here
+      </div>
+    );
 
   const modifiedFile = data?.modified;
   const targetSection = modifiedFile
@@ -58,8 +62,6 @@ function ModifiedFile() {
     text: targetSection,
     type: fileExtension as "js" | "css" | "html",
   });
-
-  console.log(targetSection);
 
   return (
     <div className="flex-1 overflow-y-auto">

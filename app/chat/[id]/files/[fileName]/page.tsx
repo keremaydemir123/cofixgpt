@@ -1,14 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 
-import { useClient } from "@/context/ClientProvider";
 import Markdown from "@/components/Markdown";
 import SearchInput from "@/components/SearchInput";
+import { useFiles } from "@/hooks/useFiles";
+import { getChatIdFromPathname } from "@/utils/getChatIdFromPathname";
 import insertMdElements from "@/utils/insertMdElements";
-import Spinner from "@/components/Spinner";
 
 interface IGetFile {
   chatId: string;
@@ -16,34 +15,16 @@ interface IGetFile {
   email: string;
 }
 
-const getFile = async ({ chatId, fileName, email }: IGetFile) => {
-  return fetch("/api/getFileByFileName", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ chatId, fileName, email }),
-  }).then((res) => res.json());
-};
-
 function FileDetails() {
-  const client = useClient();
-
   const pathname = usePathname();
-  const chatId = pathname?.split("/")[2];
-  const fileName = pathname?.split("/")[4];
+  const chatId = getChatIdFromPathname(pathname);
+  const files = useFiles(chatId);
+  const file = useMemo(() => {
+    const fileName = pathname?.split("/").pop();
+    return files?.find((file) => file.name === fileName);
+  }, [files, pathname]);
 
-  const { data, isLoading, error } = useQuery(
-    ["getFile", chatId, fileName, client?.email],
-    () =>
-      getFile({ chatId: chatId!, fileName: fileName!, email: client?.email! }),
-    { enabled: !!chatId && !!fileName && !!client?.email }
-  );
-
-  if (isLoading) return <Spinner />;
-  if (error) return <div>error</div>;
-
-  const file = data?.file;
+  if (!file) return null;
 
   const mdContent = insertMdElements({ text: file?.content, type: file?.type });
 

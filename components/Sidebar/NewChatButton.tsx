@@ -10,7 +10,6 @@ function NewChatButton({ files }: { files: IFile[] }) {
   const user = useClient();
 
   const createNewChat = async () => {
-    console.log(user?.email);
     try {
       const chatsDoc = await addDoc(
         collection(db, "users", user?.email!, "chats"),

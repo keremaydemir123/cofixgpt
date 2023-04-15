@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,10 @@ function ChatPage() {
   const email = client?.email;
 
   const pathname = usePathname();
-  const chatId = pathname?.split("/")[2];
+  const chatId = useMemo(() => {
+    const splitPath = pathname?.split("/");
+    return splitPath?.[splitPath.length - 1];
+  }, [pathname]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["getFiles", email, chatId],
