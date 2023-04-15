@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .action-card-text {
+    @apply text-base-content text-lg mt-2;
+  }
+
+  .action-card-icon {
+    @apply text-primary w-[50px] h-[50px] m-4;
+  }
+
+  .prose {
+    @apply max-w-none;
+  }
+
+  .collapse-title {
+    @apply pr-4;
+  }
+
+  .codeStyle {
+    @apply bg-base-300;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+    font-family: "Roboto Mono", monospace;
+    font-size: 1em;
+    line-height: 1.5em;
+    tab-size: 4;
+    hyphens: none;
+    overflow: auto;
+    position: static !important;
+    margin: 0 0 0.5rem 0 !important;
+    padding: 1.25em 1em;
+  }
+}
+
+/* MARKDOWN */
+
+.language-js {
+  background-color: transparent !important;
+}
+
+.language-css {
+  background-color: transparent !important;
+}
+
+.language-html {
+  background-color: transparent !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-base-100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-base-300 rounded-sm;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
