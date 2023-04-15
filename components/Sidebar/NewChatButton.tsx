@@ -10,23 +10,27 @@ function NewChatButton({ files }: { files: IFile[] }) {
   const user = useClient();
 
   const createNewChat = async () => {
-    console.log(files);
-    const chatsDoc = await addDoc(
-      collection(db, "users", user?.email!, "chats"),
-      {
-        userId: user?.email,
-        createdAt: serverTimestamp(),
-      }
-    );
+    console.log(user?.email);
+    try {
+      const chatsDoc = await addDoc(
+        collection(db, "users", user?.email!, "chats"),
+        {
+          userId: user?.email,
+          createdAt: serverTimestamp(),
+        }
+      );
 
-    addDoc(
-      collection(db, "users", user?.email!, "chats", chatsDoc.id, "files"),
-      {
-        files,
-      }
-    );
+      await addDoc(
+        collection(db, "users", user?.email!, "chats", chatsDoc.id, "files"),
+        {
+          files,
+        }
+      );
 
-    router.push(`/chat/${chatsDoc.id}`);
+      router.push(`/chat/${chatsDoc.id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

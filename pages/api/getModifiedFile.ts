@@ -23,7 +23,6 @@ export default async function handler(
   );
 
   let modified: string = "";
-  console.log(docSnap.docs[0].data().answer);
 
   if (docSnap.docs[0].data()) {
     modified = docSnap.docs[0].data().answer;

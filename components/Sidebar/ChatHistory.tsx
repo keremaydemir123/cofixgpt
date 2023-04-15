@@ -45,12 +45,10 @@ function ChatHistory() {
 
   function removeChat(chatId: string) {
     // TODO not working make your own collapse component
-    console.log("clicked, remove chat");
   }
 
   function editChatTitle(chatId: string, title: string) {
     // TODO not working make your own collapse component
-    console.log("clicked, edit chat title");
   }
 
   return (

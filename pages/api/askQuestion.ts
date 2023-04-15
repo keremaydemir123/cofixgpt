@@ -16,10 +16,6 @@ export default async function handler(
     req.body;
 
   if (!actionPrompt || !files || !chatId || !model || !email) {
-    console.log(
-      `textPrompt: ${textPrompt}, actionPrompt: ${actionPrompt}, files: ${files}, chatId: ${chatId}, model: ${model}, session:`
-    );
-
     res.status(400).json({ answer: "Bad Request" });
     return;
   }

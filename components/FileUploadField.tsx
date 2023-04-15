@@ -65,8 +65,6 @@ const FileUploadField: React.FC = () => {
   };
 
   const validateFiles = (newFiles: File[]) => {
-    console.log("newFiles: ", newFiles);
-
     newFiles.forEach((newFile) => {
       const split = newFile.name.split(".");
       const fileType = split[split.length - 1] as FileType;

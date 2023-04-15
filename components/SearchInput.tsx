@@ -35,8 +35,6 @@ function SearchInput({ files, actionPrompt }: Props) {
 
     const model = "text-davinci-003";
 
-    console.log("files: ", files);
-
     await fetch("/api/askQuestion", {
       method: "POST",
       headers: {
