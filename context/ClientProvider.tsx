@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ToastNotifications from "@/components/ToastNotifications";
 import { Provider } from "react-redux";
 import store from "@/store";
+import Modal from "@/components/Modal";
 
 const ClientContext = createContext<User | null>({
   email: "",
@@ -35,6 +36,7 @@ export const ClientProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClientContext.Provider value={user}>
       <ToastNotifications />
+      <Modal />
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           {children}

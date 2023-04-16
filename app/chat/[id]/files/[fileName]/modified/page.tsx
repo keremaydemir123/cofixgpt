@@ -7,6 +7,7 @@ import insertMdElements from "@/utils/insertMdElements";
 import { usePathname } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import PromptInput from "@/components/PromptInput";
+import { getChatIdFromPathname } from "@/utils/getChatIdFromPathname";
 
 interface IGetModifiedFile {
   chatId: string;
@@ -24,13 +25,10 @@ async function getModifiedFile({ chatId, email }: IGetModifiedFile) {
 }
 
 function ModifiedFile() {
-  // TODO: Fetch modified file from server
-  // TODO: Display modified file
-
   const pathname = usePathname();
   const user = useClient();
 
-  const chatId = pathname?.split("/")[2];
+  const chatId = getChatIdFromPathname(pathname);
   const fileName = pathname?.split("/")[4];
   const split = fileName?.split(".");
   const fileExtension = split?.[split.length - 1];
