@@ -12,6 +12,7 @@ import SidebarContainer from "./SidebarContainer";
 
 function Sidebar() {
   const user = useClient();
+
   return (
     <SidebarContainer>
       {/* Logo */}
@@ -23,7 +24,6 @@ function Sidebar() {
           text="CoFixGPT"
         />
       </Link>
-
       {/* Chat History */}
       <h2>History</h2>
       <hr />

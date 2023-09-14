@@ -21,7 +21,6 @@ function SidebarContainer({ children }: { children: React.ReactNode }) {
           />
         )}
       </div>
-
       <ChevronRightIcon
         onClick={() => setOpen(!open)}
         className="fixed top-1/2 left-0 cursor-pointer w-8 h-8 bg-base-200 rounded-lg z-30"

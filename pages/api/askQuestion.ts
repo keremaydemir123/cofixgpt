@@ -37,6 +37,7 @@ export default async function handler(
   const commonText = `You are a frontend engineer and your task is to ${action} the given files, these files are working together, just write the modified code please.
   Return code blocks with respect to exact order and exact shape given below, this shape is important for the evaluation of your code.
   Shape of the code blocks starts with three backticks and ends with three backticks, and the language of the code block is written after the first three backticks.:
+  
   ~~~html
   // your code here
   ~~~

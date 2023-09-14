@@ -53,6 +53,10 @@ function ModifiedFile() {
     );
 
   const modifiedFile = data?.modified;
+
+  // TODO: optimize for performance
+  // TODO: dont get all files, just get the modified target file
+
   const targetSection = modifiedFile
     .split(`~~~${fileExtension}`)[1]
     .split("~~~")[0];

@@ -1,9 +1,8 @@
-"use client";
-
 import React from "react";
 import ColorfulHeader from "@/components/ColorfulHeader";
 import Image from "next/image";
 import FileUploadField from "@/components/FileUploadField";
+
 function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center h-full">

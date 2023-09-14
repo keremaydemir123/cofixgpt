@@ -25,7 +25,10 @@ function ChatHistory() {
   );
 
   useEffect(() => {
-    if (!chats) return;
+    if (!chats) {
+      setLoading(false);
+      return;
+    }
     chats?.docs.map((chat: { id: string }) => {
       getFiles({ email: user?.email!, chatId: chat.id })
         .then((data: { files: IFile[] }) => {

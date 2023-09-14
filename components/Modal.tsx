@@ -8,13 +8,19 @@ function Modal() {
   const [isOpen, setIsOpen] = React.useState(true);
   if (!isOpen) return null;
   return (
-    <div className="w-full h-hull fixed top-0 left-0 bottom-0 right-0 bg-black/60 flex justify-center items-center z-100">
+    <div
+      className="w-full h-hull fixed top-0 left-0 bottom-0 right-0 bg-black/60 flex justify-center items-center z-50"
+      onClick={() => setIsOpen(false)}
+    >
       <div className="prose relative w-4/5 md:w-1/2 max-h-max bg-base-100 p-8 rounded-md over">
         <CloseIcon
           onClick={() => setIsOpen(false)}
           className="w-8 h-8 text-black absolute top-4 right-4 cursor-pointer hover:text-black/60"
         />
         <div className="w-full max-h-96 overflow-y-auto">
+          <h1 className="text-error">
+            cofixgpt is not working now due to cost of OpenAI API
+          </h1>
           <h2 className="mt-0">
             <span>Hi!👋</span>
             <span>Welcome to </span>
@@ -32,7 +38,7 @@ function Modal() {
           <p>
             Remind that, CoFixGPT is in{" "}
             <strong className="italic text-secondary">Beta.</strong> That means
-            that it&apos;s not perfect yet.
+            that it might not function perfectly yet.
           </p>
           <p>
             If you find any bugs, or have any suggestions, please let me know on{" "}

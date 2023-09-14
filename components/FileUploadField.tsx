@@ -1,23 +1,27 @@
 "use client";
 
 import CloseIcon from "@/icons/CloseIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { readFileAsText } from "@/utils/readFiles";
 import NewChatButton from "./Sidebar/NewChatButton";
 import Image from "next/image";
 
-//! Fix: Prevent duplicate files from being uploaded
-//! Fix: Prevent more than 3 files from being uploaded
-//! Fix: Prevent files with invalid types from being uploaded
-//! Fix: Prevent files with same name from being uploaded
-
-const MAX_FILES = 3;
+const MAX_FILES = 1;
 const allowedTypes: string[] = ["css", "js", "html"];
 
 const FileUploadField: React.FC = () => {
   const [files, setFiles] = useState<IFile[]>([]);
   const [dragging, setDragging] = useState(false);
+
+  // example files
+  useEffect(() => {
+    fetch("/api/getExampleStaticFiles")
+      .then((res) => res.json())
+      .then((files) => {
+        setFiles(files);
+      });
+  }, []);
 
   const readFilesAndSet = async (files: File[]) => {
     for (const file of files) {

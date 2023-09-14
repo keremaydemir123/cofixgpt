@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useRef } from "react";
 import Files from "./Files";
 import CorrectIcon from "@/icons/CorrectIcon";
+import ChevronDownIcon from "@/icons/ChevronDownIcon";
 
 type Props = {
   files: IFilesAndChat["files"];
@@ -57,10 +58,7 @@ function ChatCollapse({ files, chatId, removeChat, editChatTitle }: Props) {
       }`}
     >
       <>
-        <div
-          className="flex items-center cursor-pointer px-3 py-1"
-          onClick={() => setOpen((prev) => !prev)}
-        >
+        <div className="flex items-center cursor-pointer px-3 py-1">
           <form onSubmit={handleSubmit} className="flex-1 mr-4 text-sm">
             <input
               type="text"
@@ -83,9 +81,9 @@ function ChatCollapse({ files, chatId, removeChat, editChatTitle }: Props) {
             />
           )}
 
-          <TrashIcon
-            className="w-6 h-6 text-error cursor-pointer hover:scale-105"
-            onClick={handleDelete}
+          <ChevronDownIcon
+            className="w-6 h-6 text-base-content cursor-pointer hover:scale-105"
+            onClick={() => setOpen((prev) => !prev)}
           />
         </div>
         {open && (
